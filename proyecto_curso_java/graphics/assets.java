@@ -8,6 +8,6 @@ public class assets {
 
 
     public static void init(){
-        jugador = loader.loadImg("proyecto_curso_java/recursos/jugador.png");
+        jugador = loader.loadImg("/proyecto_curso_java/recursos/jugador.png");
     }
 }

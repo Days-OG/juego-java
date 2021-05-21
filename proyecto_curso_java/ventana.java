@@ -2,12 +2,15 @@ package proyecto_curso_java;
 import javax.swing.JFrame;
 
 import proyecto_curso_java.graphics.assets;
+import proyecto_curso_java.entradas.teclado;
+import proyecto_curso_java.eventos.juego;
 
 import java.awt.Dimension;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.image.BufferStrategy;
 import java.awt.Graphics;
+
 
 public class ventana extends JFrame implements Runnable {
     public static final int WIDTH = 800, HEIGHT = 600;
@@ -25,6 +28,11 @@ public class ventana extends JFrame implements Runnable {
     private int AVERAGEFPS = FPS;
     //fin de fps
 
+    //eventos
+    private juego eventoJuego;
+    private teclado teclado;
+
+
     // ventana emergente
     public ventana()
     {
@@ -36,6 +44,7 @@ public class ventana extends JFrame implements Runnable {
         setVisible(true);
 
         canvas = new Canvas();
+        teclado = new teclado();
 
         canvas.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         canvas.setMaximumSize(new Dimension(WIDTH, HEIGHT));
@@ -43,6 +52,7 @@ public class ventana extends JFrame implements Runnable {
         canvas.setFocusable(true);
 
         add(canvas);
+        canvas.addKeyListener(teclado);
     }
 
     public static void main(String[] args){
@@ -50,7 +60,9 @@ public class ventana extends JFrame implements Runnable {
     }
 
     private void actualizar(){
-
+        teclado.actualizar();
+        eventoJuego.actualizar();
+        
     }
 
     //fin de ventana----
@@ -69,7 +81,8 @@ public class ventana extends JFrame implements Runnable {
 		
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
-		g.drawImage(assets.jugador, 0, 0, null);
+        eventoJuego.draw(g);
+		//g.drawImage(assets.jugador, 100, 100, null);
 		
 		g.drawString(""+AVERAGEFPS, 10, 20);
 
@@ -82,6 +95,7 @@ public class ventana extends JFrame implements Runnable {
     private void init()
     {
         assets.init();
+        eventoJuego = new juego();
     }
 
     @Override
